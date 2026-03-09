@@ -17,30 +17,26 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     setMounted(true);
-    const savedTheme = localStorage.getItem("theme") as Theme | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-    } else {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      setTheme(prefersDark ? "dark" : "light");
-    }
+    // Check system preference
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const savedTheme = (typeof window !== 'undefined' && window.localStorage?.getItem("theme")) as Theme | null;
+    setTheme(savedTheme || (prefersDark ? "dark" : "light"));
   }, []);
 
   useEffect(() => {
-    if (mounted) {
-      localStorage.setItem("theme", theme);
-      document.documentElement.classList.toggle("dark", theme === "dark");
-      document.documentElement.classList.toggle("light", theme === "light");
+    if (mounted && typeof window !== 'undefined') {
+      try {
+        localStorage.setItem("theme", theme);
+      } catch (e) {
+        // Ignore localStorage errors
+      }
+      document.documentElement.setAttribute('data-theme', theme);
     }
   }, [theme, mounted]);
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   };
-
-  if (!mounted) {
-    return <>{children}</>;
-  }
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

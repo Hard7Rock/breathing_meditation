@@ -2,12 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+:root,
+[data-theme="dark"] {
   --background: #0a0a0a;
   --foreground: #ededed;
 }
 
-.light {
+[data-theme="light"] {
   --background: #f8f9fa;
   --foreground: #1a1a1a;
 }
@@ -19,8 +20,43 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Light theme overrides */
+[data-theme="light"] main {
+  background: linear-gradient(to bottom right, #dbeafe, #e0e7ff, #fce7f3) !important;
+}
+
+[data-theme="light"] .text-white {
+  color: #1f2937 !important;
+}
+
+[data-theme="light"] .text-white\/80 {
+  color: #374151 !important;
+}
+
+[data-theme="light"] .text-white\/60 {
+  color: #6b7280 !important;
+}
+
+[data-theme="light"] .text-gray-300,
+[data-theme="light"] .text-gray-400 {
+  color: #4b5563 !important;
+}
+
+[data-theme="light"] .bg-white\/10 {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+[data-theme="light"] .bg-white {
+  background-color: #4f46e5 !important;
+}
+
+[data-theme="light"] button.bg-white {
+  color: white !important;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 }
+
