@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import ThemeToggle from "@/components/ThemeToggle";
 
 const techniques = [
   {
@@ -50,8 +49,6 @@ const techniques = [
 export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 light:from-blue-50 light:via-purple-50 light:to-pink-50 transition-colors duration-500">
-      <ThemeToggle />
-      
       <div className="container mx-auto px-4 py-16">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
