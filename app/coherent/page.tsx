@@ -1,40 +1,36 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import BreathingCircle from "@/components/BreathingCircle";
 
-type Phase = "idle" | "inhale" | "hold" | "exhale";
+type Phase = "idle" | "inhale" | "exhale";
 
-export default function FourSevenEight() {
+export default function CoherentBreathing() {
   const [phase, setPhase] = useState<Phase>("idle");
   const [isActive, setIsActive] = useState(false);
   const [timer, setTimer] = useState(0);
   const [cycles, setCycles] = useState(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (!isActive) return;
+    if (!isActive) {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      return;
+    }
 
     let isCancelled = false;
 
     const cycleSequence = async () => {
-      // Inhale - 4 seconds
+      // Inhale - 6 seconds
       setPhase("inhale");
-      setTimer(4);
-      await countdown(4);
+      await countdown(6);
       if (isCancelled) return;
 
-      // Hold - 7 seconds
-      setPhase("hold");
-      setTimer(7);
-      await countdown(7);
-      if (isCancelled) return;
-
-      // Exhale - 8 seconds
+      // Exhale - 6 seconds
       setPhase("exhale");
-      setTimer(8);
-      await countdown(8);
+      await countdown(6);
       if (isCancelled) return;
 
       setCycles((prev) => prev + 1);
@@ -44,17 +40,20 @@ export default function FourSevenEight() {
 
     return () => {
       isCancelled = true;
+      if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [isActive, cycles]);
 
   const countdown = (seconds: number): Promise<void> => {
     return new Promise((resolve) => {
       let count = seconds;
-      const interval = setInterval(() => {
+      setTimer(count);
+      
+      intervalRef.current = setInterval(() => {
         count--;
         setTimer(count);
         if (count <= 0) {
-          clearInterval(interval);
+          if (intervalRef.current) clearInterval(intervalRef.current);
           resolve();
         }
       }, 1000);
@@ -74,7 +73,7 @@ export default function FourSevenEight() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex flex-col">
+    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-blue-900 to-purple-900 flex flex-col">
       <div className="container mx-auto px-4 py-8">
         <Link
           href="/"
@@ -91,15 +90,15 @@ export default function FourSevenEight() {
           className="text-center mb-8"
         >
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            4-7-8 Breathing
+            Coherent Breathing
           </h1>
-          <p className="text-white/80 text-lg">Relaxing Breath</p>
+          <p className="text-white/80 text-lg">Когерентне Дихання</p>
         </motion.div>
 
         <div className="w-full max-w-md h-96 mb-8">
           <BreathingCircle
             phase={phase}
-            color="from-blue-500 to-purple-600"
+            color="from-indigo-500 to-blue-600"
           />
         </div>
 
@@ -123,7 +122,7 @@ export default function FourSevenEight() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleStart}
-              className="px-8 py-4 bg-white text-purple-900 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-shadow"
+              className="px-8 py-4 bg-white text-indigo-900 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-shadow"
             >
               Почати
             </motion.button>
@@ -148,10 +147,11 @@ export default function FourSevenEight() {
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
             <h3 className="text-white font-semibold mb-3">Інструкція:</h3>
             <ul className="text-white/80 text-sm space-y-2 text-left">
-              <li>• Вдихніть через ніс протягом 4 секунд</li>
-              <li>• Затримайте дихання на 7 секунд</li>
-              <li>• Видихніть через рот протягом 8 секунд</li>
-              <li>• Повторіть 4-8 циклів</li>
+              <li>• Вдихніть протягом 6 секунд</li>
+              <li>• Видихніть протягом 6 секунд</li>
+              <li>• Підтримуйте рівний, спокійний ритм</li>
+              <li>• Практикуйте 10-20 хвилин</li>
+              <li>• Ідеально для зниження стресу</li>
             </ul>
           </div>
         </motion.div>
