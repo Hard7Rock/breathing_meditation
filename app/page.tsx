@@ -59,7 +59,7 @@ export default function Home() {
           <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 dark:from-blue-400 dark:to-purple-500 bg-clip-text text-transparent">
             Breathing Meditation
           </h1>
-          <p className="text-xl text-gray-300 dark:text-gray-300
+          <p className="text-xl text-gray-300 dark:text-gray-300">
             5 патернів дихання для медитацій
           </p>
         </motion.div>
