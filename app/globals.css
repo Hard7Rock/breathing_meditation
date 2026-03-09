@@ -7,10 +7,16 @@
   --foreground: #ededed;
 }
 
+.light {
+  --background: #f8f9fa;
+  --foreground: #1a1a1a;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 @layer utilities {

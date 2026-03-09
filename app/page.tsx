@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const techniques = [
   {
@@ -48,7 +49,9 @@ const techniques = [
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 light:from-blue-50 light:via-purple-50 light:to-pink-50 transition-colors duration-500">
+      <ThemeToggle />
+      
       <div className="container mx-auto px-4 py-16">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -56,10 +59,10 @@ export default function Home() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 dark:from-blue-400 dark:to-purple-500 light:from-blue-600 light:to-purple-700 bg-clip-text text-transparent">
             Breathing Meditation
           </h1>
-          <p className="text-xl text-gray-300">
+          <p className="text-xl text-gray-300 dark:text-gray-300 light:text-gray-700">
             5 патернів дихання для медитацій
           </p>
         </motion.div>
@@ -115,7 +118,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.6 }}
-          className="text-center mt-16 text-gray-400 text-sm"
+          className="text-center mt-16 text-gray-400 dark:text-gray-400 light:text-gray-600 text-sm"
         >
           <p>Оберіть техніку для початку практики</p>
         </motion.div>
